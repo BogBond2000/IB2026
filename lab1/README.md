@@ -240,12 +240,6 @@ Pipeline запускается при каждом `push` и `pull_request` в 
 
 ![pip-audit report](docs/pip-audit-report.png)
 
-**4. Уязвимость B201 (`debug=True`) — до и после исправления:**
-
-![B201 before](docs/bandit-b201-before.png)
-![B201 after](docs/bandit-b201-after.png)
-
----
 
 ## Ссылка на последний успешный запуск pipeline
 

@@ -9,7 +9,7 @@ from sqlalchemy import select
 
 from config import Config
 from models import db, bcrypt, User, Post
-from auth import auth_required, admin_required
+from auth import auth_required
 
 
 def create_app():
@@ -36,6 +36,7 @@ def create_app():
                                 content="Привет, мир!", author_id=admin.id))
             db.session.commit()
 
+    # ---------- Эндпоинт 1: POST /auth/login ----------
     @app.route("/auth/login", methods=["POST"])
     def login():
         data = request.get_json(silent=True) or {}
@@ -58,6 +59,7 @@ def create_app():
         )
         return jsonify(access_token=token, token_type="Bearer"), 200
 
+    # ---------- Эндпоинт 2: GET /api/data ----------
     @app.route("/api/data", methods=["GET"])
     @auth_required
     def get_data():
@@ -70,6 +72,7 @@ def create_app():
         } for p in posts]
         return jsonify(data=safe), 200
 
+    # ---------- Эндпоинт 3: POST /api/posts ----------
     @app.route("/api/posts", methods=["POST"])
     @auth_required
     def create_post():
@@ -91,12 +94,7 @@ def create_app():
         db.session.commit()
         return jsonify(post.to_dict()), 201
 
-    @app.route("/api/users", methods=["GET"])
-    @admin_required
-    def list_users():
-        users = User.query.all()
-        return jsonify(users=[u.to_dict() for u in users]), 200
-
+    # ---------- Обработчики ошибок JWT ----------
     @jwt.unauthorized_loader
     def missing_token(reason):
         return jsonify({"msg": "Authorization token required"}), 401
