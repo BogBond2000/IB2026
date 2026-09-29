@@ -1,1 +1,19 @@
 /.idea
+# IDE
+.idea/
+**/.idea/
+*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+venv/
+.venv/
+
+# App
+*.db
+.env
+
+# OS
+.DS_Store
