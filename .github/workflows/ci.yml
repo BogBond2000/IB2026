@@ -39,11 +39,11 @@ jobs:
 
       - name: SCA - Safety (project requirements only)
         run: |
-          safety check --full-report -r requirements.txt || true
+          safety check --full-report -r requirements.txt 
 
       - name: SCA - pip-audit (project requirements only)
         run: |
-          pip-audit -r requirements.txt || true
+          pip-audit -r requirements.txt 
 
       - name: Upload Bandit report
         if: always()
